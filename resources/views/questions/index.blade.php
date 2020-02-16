@@ -10,8 +10,21 @@
                     @foreach ($questions as $question)
                         <div class="media">
                             <div class="media-body">
-                                <h3 class="mt-0">{{$question->title}}</h3>
-                                {{ str_limit($question->body,250) }}
+                                {{--  
+                                    we can use route('question.show',$question->id) inside the h3 tag below
+                                    instead of make it in Question model like:
+                                    public function getUrlAttribute(){
+                                        return route('questions.show'.$this->id);
+                                    }    
+                                    and use inside h3 tag below the property ' url' instead
+                                --}}
+                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                <p class="lead">
+                                    Asked by 
+                                    <a href="{{ $question->user->url}}">{{ $question->user->name}}</a>
+                                    <small class="text-muted">{{ $question->created_date }}</small>
+                                </p>
+                                    {{ str_limit($question->body,250) }}
                             </div>
                         </div>
                         <hr>
