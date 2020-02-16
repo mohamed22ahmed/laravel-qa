@@ -41,7 +41,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required|max:255',
+            'body'=>'required',
+        ]);
+        //to store the question using create method & when being a relation use:
+        $request->user()->questions()->create($request->only('title','body'));
+        return redirect()->route('questions.index')->with('success','your question has been submitted');
     }
 
     /**
