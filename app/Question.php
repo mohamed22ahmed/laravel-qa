@@ -31,4 +31,15 @@ class Question extends Model
         // to show the date itself use the method format("d/m/y");
         return $this->created_at->diffForHumans();
     }
+
+    public function getStatusAttribute(){
+        if($this->answers>0){
+            if($this->best_answer_id)
+                return 'answered-accepted';
+            return "answered";
+        }
+        return 'unanswered';
+            
+
+    }
 }
