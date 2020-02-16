@@ -14,7 +14,11 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions=Question::latest()->paginate(5);//to show 5 questions per page
+        /*
+            to reduce the number of queries and time of loading data use :
+            with('user') ==> user is the relation method set in question model
+        */ 
+        $questions=Question::with('user')->latest()->paginate(5);//to show 5 questions per page
         return view('questions.index',compact('questions'));
     }
 
