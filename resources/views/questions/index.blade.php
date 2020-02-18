@@ -30,15 +30,21 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                {{--  
-                                    we can use route('question.show',$question->id) inside the h3 tag below
-                                    instead of make it in Question model like:
-                                    public function getUrlAttribute(){
-                                        return route('questions.show'.$this->id);
-                                    }    
-                                    and use inside h3 tag below the property ' url' instead
-                                --}}
-                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                <div class="d-flex align-items-center">
+                                    {{--  
+                                        we can use route('question.show',$question->id) inside the h3 tag below
+                                        instead of make it in Question model like:
+                                        public function getUrlAttribute(){
+                                            return route('questions.show'.$this->id);
+                                        }    
+                                        and use inside h3 tag below the property ' url' instead
+                                    --}}
+                                    <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                    <div class="ml-auto">
+                                        <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                    </div>
+                                </div>
+                                
                                 <p class="lead">
                                     Asked by 
                                     <a href="{{ $question->user->url}}">{{ $question->user->name}}</a>

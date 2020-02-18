@@ -69,7 +69,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('questions.edit',compact('question'));
     }
 
     /**
@@ -81,7 +81,12 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $request->validate([
+            'title'=>'required|max:255',
+            'body'=>'required',
+        ]);
+        $question->update($request->only('title','body'));
+        return redirect()->route('questions.index')->with('success','Question updated successfully');
     }
 
     /**

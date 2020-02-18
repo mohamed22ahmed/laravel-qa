@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2>Ask Questions</h2>
+                        <h2>Edit Question</h2>
                         <div class="ml-auto">
                             <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all Question</a>
                         </div>
@@ -14,11 +14,12 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('questions.store')}}" method="post">
+                    <form action="{{ route('questions.update',$question->id)}}" method="post">
                         @csrf
+                        @method('put')
                         <div class="form-group">
                             <label for="question-title">Question Title</label>
-                            <input type="text" name="title" id="question-title" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" value="{{old('title')}}">
+                            <input type="text" name="title" id="question-title" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" value="{{old('title',$question->title)}}">
                             @if($errors->has('title'))
                                 <div class="invalid-feedback">
                                     <strong>{{$errors->first('title')}}</strong>
@@ -27,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="question-body">Explain your question</label>
-                            <textarea name="body" id="question-body" rows="10" class="form-control {{$errors->has('body') ? 'is-invalid' : ''}}">{{ old('body') }}</textarea>
+                            <textarea name="body" id="question-body" rows="10" class="form-control {{$errors->has('body') ? 'is-invalid' : ''}}">{{ old('body',$question->body) }}</textarea>
                             @if($errors->has('body'))
                                 <div class="invalid-feedback">
                                     <strong>{{$errors->first('body')}}</strong>
@@ -35,7 +36,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Ask Question</button>
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Update Question</button>
                         </div>
                     </form>
                 </div>
