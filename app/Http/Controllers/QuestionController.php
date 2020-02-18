@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         /*
@@ -22,23 +17,12 @@ class QuestionController extends Controller
         return view('questions.index',compact('questions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $question=new Question();
         return view('questions.create',compact('question'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,12 +34,6 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')->with('success','your question has been submitted');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function show(Question $question)
     {
         // to increment integer element use increment instead of ++
@@ -64,24 +42,11 @@ class QuestionController extends Controller
         return view('questions.show',compact('q'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Question $question)
     {
         return view('questions.edit',compact('question'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Question $question)
     {
         $request->validate([
@@ -92,12 +57,6 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')->with('success','Question updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Question $question)
     {
         $question->delete();
