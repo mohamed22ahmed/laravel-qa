@@ -58,7 +58,10 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // to increment integer element use increment instead of ++
+        $question->increment('views');
+        $q=Question::find($question->id);
+        return view('questions.show',compact('q'));
     }
 
     /**
