@@ -40,21 +40,17 @@
                                         and use inside h3 tag below the property ' url' instead
                                     --}}
                                     <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
-                                    <div class="ml-auto">
-                                        @if(Auth::user())
-                                            @if(Auth::user()->can('update',$question))
-                                              <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
-                                            @endif
-                                        @endif
-                                        @if(Auth::user())
-                                            @if(Auth::user()->can('delete',$question))
-                                                <form style="display:inline" action="{{route('questions.destroy',$question->id)}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('are you sure')">Delete</button>
-                                                </form>
-                                            @endif
-                                        @endif
+                                    <div class="ml-auto">=
+                                        @can('update', $question)                              
+                                            <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        @endcan
+                                        @can('delete',$question)
+                                            <form style="display:inline" action="{{route('questions.destroy',$question->id)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('are you sure')">Delete</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </div>
                                 
