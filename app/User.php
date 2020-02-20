@@ -53,4 +53,10 @@ class User extends Authenticatable
         return '#';
     }
 
+    public function getAvatarAttribute(){
+        // to get avatar photo go to gavatar.com and choose php
+        $email=$this->email;
+        $size=32;
+        return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."?s=".$size;
+    }
 }
