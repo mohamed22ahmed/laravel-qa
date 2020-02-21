@@ -10923,3 +10923,42 @@ a.text-dark:focus {
   margin-top: 10px;
 }
 
+.vote-controls {
+  min-width: 60px;
+  margin-right: 30px;
+  text-align: center;
+  color: #495057;
+}
+
+.vote-controls span,
+.vote-controls a {
+  display: block;
+}
+
+.vote-controls span.votes-count {
+  font-size: 25px;
+}
+
+.vote-controls span.favorite-count {
+  font-size: 12px;
+}
+
+.vote-controls a {
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.vote-controls .off,
+.vote-controls .off:hover {
+  color: #c2cfc5;
+}
+
+.vote-controls .favorite,
+.vote-controls.favorite:hover {
+  color: #ffc107;
+}
+
+.vote-accepted {
+  color: #8bdf1e;
+}
+
