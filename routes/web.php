@@ -11,16 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('questions', 'QuestionController');
 
+// Answers Routes:
+Route::post('questions/{question}','AnswersController@store');
 
 
 
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
