@@ -50,13 +50,13 @@ class QuestionController extends Controller
 
     public function edit(Question $question)
     {
-        $this->authorize('delete',$question);
+        $this->authorize('update',$question);
         return view('questions.edit',compact('question'));
     }
 
     public function update(Request $request, Question $question)
     {        
-        $this->authorize('delete',$question);
+        $this->authorize('update',$question);
         $request->validate([
             'title'=>'required|max:255',
             'body'=>'required',
