@@ -16,7 +16,9 @@ Route::resource('questions', 'QuestionController');
 // Answers Routes:
 Route::post('questions/{question}','AnswersController@store');
 
-
+Route::get('question/{qid}/answers/{id}/edit','AnswersController@edit');
+Route::post('question/{qid}/answers/{id}/edit','AnswersController@update');
+Route::get('answers/{id}/delete','AnswersController@destroy');
 
 
 Auth::routes();
