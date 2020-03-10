@@ -17,14 +17,14 @@ class AnswersController extends Controller
     }
 
     public function edit(Question $question, Answer $answer,$id,$qid){
-        // $this->authorize('update',$answer);
+       // $this->authorize('updateAnswer',$answer);
         $answer=Answer::find($qid);
         $question=Question::find($id);
         return view('answers.edit',compact('question','answer'));
     }
 
     public function update(Request $request, Answer $answer,$qid,$id){
-        //$this->authorize('update',$answer);
+        //$this->authorize('updateAnswer',$answer);
         $answer=Answer::find($id);
         $answer->update($request->validate([
             'body'=>'required',
@@ -33,7 +33,7 @@ class AnswersController extends Controller
     }
 
     public function destroy(Answer $answer,$id){
-        //$this->authorize('delete',$answer);
+        //$this->authorize('deleteAnswer',$answer);
         $answer=Answer::find($id);
         $answer->delete();
         return redirect()->back()->with('success','Your answer has been deleted successfully');

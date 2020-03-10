@@ -16,6 +16,10 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
+    public function votes(){
+        return $this->morphByMany(User::class, 'votable');
+    }
+
     public function getCreatedDateAttribute(){
         // diffForHumans ==> this for show the date as 2 days ago for examble
         // to show the date itself use the method format("d/m/y");
@@ -36,6 +40,9 @@ class Answer extends Model
             $answer->question->decrement('answers_count');
         });
     }
-
     
+    public function makeItAccepted(Question $question){
+        if($this->id==$question->best_answer_id)
+            return 'vote-accepted';
+    }
 }

@@ -18,8 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-        Question::class => QuestionPolicy::class,
-        Answer::class => AnswerPolicy::class,
+        //Question::class => QuestionPolicy::class,
+        //Answer::class => AnswerPolicy::class,
     ];
 
     /**
@@ -31,11 +31,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        \Gate::define('update_question',function($user,$question){
-            return $user->id==$question->user_id;
-        });
-        \Gate::define('delete_question',function($user,$question){
-            return $user->id==$question->user_id;
-        });
+        // \Gate::define('update_question',function($user,$question){
+        //     return $user->id==$question->user_id;
+        // });
+        // \Gate::define('delete_question',function($user,$question){
+        //     return $user->id==$question->user_id;
+        // });
     }
 }

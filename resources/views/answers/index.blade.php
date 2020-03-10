@@ -16,25 +16,33 @@
                                 <a title="This answer is not useful" class="vote-down off">
                                     <i class="fas fa-caret-down fa-3x"></i>
                                 </a>
-                                <a title="Click to mark as best answer (click again to undo)" class="mt-2">
-                                    <i class="fas fa-check fa-2x vote-accepted"></i>
-                                    <span class="favorite-count">123</span>
-                                </a>
+                                @if ($answer->user_id == \Auth::id())
+                                    <a 
+                                        title="Click to mark as best answer (click again to undo)" 
+                                        class="mt-2"
+                                        onclick="event.preventDefault();document.getElementById('accept-answer-{{$answer->id}}').submit()"
+                                    >
+                                        <i class="fas fa-check fa-2x {{$answer->makeItAccepted($q)}}"></i>
+                                        <span class="favorite-count">123</span>
+                                    </a>
+                                    <form action="{{ route('answers.accept',$answer->id) }}" id="accept-answer-{{$answer->id}}" method="post" style="display:none">
+                                        @csrf
+                                    </form>
+                                @else
+                                    @if($answer->question->best_answer_id == $answer->id)
+                                        <a title="Click to mark as best answer (click again to undo)" class="mt-2">
+                                        <i class="fas fa-check fa-2x {{$answer->makeItAccepted($q)}}"></i>
+                                    @endif
+                                @endif
                             </div>
                             <div class="media-body">
                                 {!! $answer->body_html !!}
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="ml-auto">
-                                            @if(Auth::user())
-                                                @if(Auth::user()->can('update',$answer))
-                                                  <a href='{{url("question/$q->id/answers/$answer->id/edit") }}' class="btn btn-sm btn-outline-info">Edit</a>
-                                                @endif
-                                            @endif
-                                            @if(Auth::user())
-                                                @if(Auth::user()->can('delete',$answer))
-                                                <a href='{{url("answers/$answer->id/delete") }}' class="btn btn-sm btn-outline-danger" onclick="return confirm('are you sure')">Delete</a>
-                                                @endif
+                                            @if ($answer->user_id == \Auth::id())
+                                                <a href='{{url("question/$q->id/answers/$answer->id/edit") }}' class="btn btn-sm btn-outline-info">Edit</a>
+                                                <a href='{{url("answers/$answer->id/delete") }}' class="btn btn-sm btn-outline-danger" onclick="return confirm('are you sure')">Delete</a>                               
                                             @endif
                                         </div>
                                     </div>

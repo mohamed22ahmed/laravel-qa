@@ -20,7 +20,7 @@
                             <div class="d-flex flex-column counters">
                                 <div class="vote">
                                     {{--  str_plural => it uses for make the word single or plural جمع --}}
-                                    <strong>{{$question->votes }}</strong> {{ str_plural('vote',$question->votes) }}
+                                    <strong>{{$question->votes_count }}</strong> {{ str_plural('vote',$question->votes_count) }}
                                 </div>
                                 <div class="status {{$question->status}}">
                                     <strong>{{$question->answers_count }}</strong> {{ str_plural('answer',$question->answers_count) }}
@@ -40,7 +40,7 @@
                                         and use inside h3 tag below the property ' url' instead
                                     --}}
                                     <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
-                                    <div class="ml-auto">=
+                                    <div class="ml-auto">
                                         @can('update', $question)                              
                                             <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
                                         @endcan

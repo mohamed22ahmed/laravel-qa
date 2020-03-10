@@ -8,17 +8,33 @@ class Question extends Model
 {
     protected $fillable=['title','body'];
 
+    // Relations:
     public function user(){
         return $this->belongsTo(User::class);
     }
 
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
+    
+    public function favorites(){
+        // to make the created at and updated at have a value not null
+        return $this->belongsToMany(User::class, 'favorites')->withTimeStamps();
+    }
+
+    public function votes(){
+        return $this->morphedByMany(User::class, 'votable');
+    }
+
+    // accessors for Question ==> Set Attributes
     public function setTitleAttribute($value){
         $this->attributes['title']=$value;
         $this->attributes['slug']=str_slug($value);
     }
 
+
     /*
-      accessors for Question 
+      accessors for Question ==> Get Attributes 
       accessor format is 
       getNameAttribute ==> where Name is the attribute name
     */
@@ -46,7 +62,16 @@ class Question extends Model
         return \Parsedown::instance()->text($this->body);
     }
 
-    public function answers(){
-        return $this->hasMany(Answer::class);
+    public function acceptBestAnswer(Answer $answer){
+        $this->best_answer_id = $answer->id;
+        $this->save();
+    }
+
+    public function getIsFavoritedAttribute(){
+        return $this->favorites()->where('user_id',auth()->id())->count()>0;
+    }
+    
+    public function getFavoritesCountAttribute(){
+        return $this->favorites->count();
     }
 }
