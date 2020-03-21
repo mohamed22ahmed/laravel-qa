@@ -55,8 +55,11 @@ class User extends Authenticatable
     public function voteQuestions(){
         return $this->morphedByMany(Question::class, 'votable');
     }
-    
     public function voteAnswers(){
+        return $this->morphedByMany(Answer::class, 'votable');
+    }
+    
+    public function rel(){
         return $this->morphedByMany(Answer::class, 'votable');
     }
 
@@ -77,28 +80,22 @@ class User extends Authenticatable
     // this function shows how the user votes the question
     public function voteQuestion(Question $question, $vote){
         $voteQuestions = $this->voteQuestions();
-        
-        if($voteQuestions->where('votable_id',$question->id)->exists())
-            $voteQuestions->updateExistingPivot($question, ['vote'=>$vote]);
-        else
-            $voteQuestions->attach($question, ['vote'=>$vote]);
-        
-        $vote = $voteQuestions->where('votable_id',$question->id)->exists() ? $voteQuestions->where('votable_id',$question->id)->sum('vote') : 0;
-        $question->votes_count = $vote;
-        $question->save();
+        $this->_vote($voteQuestions,$question,$vote);
     }
 
     // this function shows how the user votes the answer
     public function voteAnswer(Answer $answer, $vote){
         $voteAnswers = $this->voteAnswers();
-        
-        if($voteAnswers->where('votable_id',$answer->id)->exists())
-            $voteAnswers->updateExistingPivot($answer, ['vote'=>$vote]);
+        $this->_vote($voteAnswers,$answer,$vote);
+    }
+
+    private function _vote($rel, $model, $vote){
+        if($rel->where('votable_id',$model->id)->exists())
+            $rel->updateExistingPivot($model, ['vote'=>$vote]);
         else
-            $voteAnswers->attach($answer, ['vote'=>$vote]);
-        
-        $vote = $voteAnswers->where('votable_id',$answer->id)->exists() ? $voteAnswers->where('votable_id',$answer->id)->sum('vote') : 0;
-        $answer->votes_count = $vote;
-        $answer->save();
+            $rel->attach($model, ['vote'=>$vote]);
+        $vote = $rel->where('votable_id',$model->id)->exists() ? $rel->where('votable_id',$model->id)->sum('vote') : 0;
+        $model->votes_count = $vote;
+        $model->save();
     }
 }
