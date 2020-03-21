@@ -28,7 +28,7 @@ class Answer extends Model
     
     public function getBodyHtmlAttribute(){
         // to convert text to its html format
-        return \Parsedown::instance()->text($this->body);
+        return clean(\Parsedown::instance()->text($this->body));
     }
 
     public static function boot(){

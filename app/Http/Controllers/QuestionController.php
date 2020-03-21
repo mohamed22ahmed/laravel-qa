@@ -32,8 +32,8 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|max:255',
-            'body'=>'required',
+            'title'=>'required|max:255|regex:[A-Za-z1-9 ]',
+            'body'=>'required|regex:[A-Za-z1-9 ]',
         ]);
         //to store the question using create method & when being a relation use:
         $request->user()->questions()->create($request->only('title','body'));
@@ -58,8 +58,8 @@ class QuestionController extends Controller
     {        
         $this->authorize('update',$question);
         $request->validate([
-            'title'=>'required|max:255',
-            'body'=>'required',
+            'title'=>'required|max:255|regex:[A-Za-z1-9 ]',
+            'body'=>'required|regex:[A-Za-z1-9 ]',
         ]);
         $question->update($request->only('title','body'));
         return redirect()->route('questions.index')->with('success','Question updated successfully');

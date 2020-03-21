@@ -10,7 +10,7 @@ class AnswersController extends Controller
 {
     public function store(Question $question){
         request()->validate([
-            'body'=>'required',
+            'body'=>'required|regex:[A-Za-z1-9 ]',
         ]);
         $question->answers()->create(['body'=>request('body'),'user_id'=>\Auth::id()]);
         return back()->with('success','your answer has been submitted successfully');
@@ -27,7 +27,7 @@ class AnswersController extends Controller
         //$this->authorize('updateAnswer',$answer);
         $answer=Answer::find($id);
         $answer->update($request->validate([
-            'body'=>'required',
+            'body'=>'required|regex:[A-Za-z1-9 ]',
         ]));
         return redirect()->route('questions.show', $qid)->with('success','Your answer has been updated successfully');
     }
