@@ -29,7 +29,7 @@ Route::post('/questions/{question}/unfavorite','FavoriteController@destroy')->na
 Route::post('/questions/{question}/vote','VoteQuestionController');
 
 // Route for vote Answer :
-//Route::post('/answer/{answer}/vote','VoteAnswerController');
+Route::post('/answers/{answer}/vote','VoteAnswerController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

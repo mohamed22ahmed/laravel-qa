@@ -26,7 +26,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Update Question</button>
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Update Answer</button>
                         </div>
                     </form>
                 </div>

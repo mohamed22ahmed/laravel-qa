@@ -9,13 +9,31 @@
                     @foreach ($q->answers as $answer)
                         <div class="media">
                             <div class="d-flex flex-column vote-controls">
-                                <a class="vote-up" title="This answer is useful">
+                                <a 
+                                class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault();document.getElementById('up-vote-answer-{{ $answer->id }}').submit()"
+                                title="This answer is useful"
+                                >
                                     <i class="fas fa-caret-up fa-3x"></i>
                                 </a>
-                                <span class="votes-count">1230</span>
-                                <a title="This answer is not useful" class="vote-down off">
+                                <form action="/answers/{{ $answer->id }}/vote" id="up-vote-answer-{{ $answer->id }}" method="post" style="display:none">
+                                    @csrf     
+                                    <input type="hidden" name="vote" value="1">
+                                </form>
+
+                                <span class="votes-count">{{ $answer->votes_count }}</span>
+
+                                <a 
+                                    title="This question is not useful" 
+                                    class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                                    onclick="event.preventDefault();document.getElementById('down-vote-answer-{{ $answer->id }}').submit()"
+                                >
                                     <i class="fas fa-caret-down fa-3x"></i>
                                 </a>
+                                <form action="/answers/{{ $answer->id }}/vote" id="down-vote-answer-{{ $answer->id }}" method="post" style="display:none">
+                                    @csrf     
+                                    <input type="hidden" name="vote" value="-1">
+                                </form>
                                 @if ($answer->user_id == \Auth::id())
                                     <a 
                                         title="Click to mark as best answer (click again to undo)" 
@@ -29,10 +47,10 @@
                                         @csrf
                                     </form>
                                 @else
-                                    @if($answer->question->best_answer_id == $answer->id)
-                                        <a title="Click to mark as best answer (click again to undo)" class="mt-2">
-                                        <i class="fas fa-check fa-2x {{$answer->makeItAccepted($q)}}"></i>
-                                    @endif
+                                        @if($answer->question->best_answer_id == $answer->id)
+                                            <a title="Click to mark as best answer (click again to undo)" class="mt-2">
+                                            <i class="fas fa-check fa-2x {{$answer->makeItAccepted($q)}}"></i>
+                                        @endif
                                 @endif
                             </div>
                             <div class="media-body">
@@ -46,9 +64,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-4">
 
-                                    </div>
+                                    <div class="col-4"></div>
+
                                     <div class="col-4">
                                         <span class="text-muted">
                                             Answered {{ $answer->created_date }}
