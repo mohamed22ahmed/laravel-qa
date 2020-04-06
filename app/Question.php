@@ -8,6 +8,8 @@ class Question extends Model
 {
     protected $fillable=['title','body'];
 
+    protected $appends=['created_date'];
+
     // Relations:
     public function user(){
         return $this->belongsTo(User::class);
@@ -16,7 +18,7 @@ class Question extends Model
     public function answers(){
         return $this->hasMany(Answer::class)->orderBy('votes_count','DESC');
     }
-    
+
     public function favorites(){
         // to make the created at and updated at have a value not null
         return $this->belongsToMany(User::class, 'favorites')->withTimeStamps();
@@ -34,8 +36,8 @@ class Question extends Model
 
 
     /*
-      accessors for Question ==> Get Attributes 
-      accessor format is 
+      accessors for Question ==> Get Attributes
+      accessor format is
       getNameAttribute ==> where Name is the attribute name
     */
     public function getUrlAttribute(){
@@ -70,7 +72,7 @@ class Question extends Model
     public function getIsFavoritedAttribute(){
         return $this->favorites()->where('user_id',auth()->id())->count()>0;
     }
-    
+
     public function getFavoritesCountAttribute(){
         return $this->favorites->count();
     }

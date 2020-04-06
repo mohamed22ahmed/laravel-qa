@@ -18,7 +18,7 @@
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
 
-                            <a 
+                            <a
                                 class="vote-up {{ Auth::guest() ? 'off' : '' }}"
                                 onclick="event.preventDefault();document.getElementById('up-vote-question-{{$q->id}}').submit()"
                                 title="This question is useful"
@@ -26,42 +26,42 @@
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
                             <form action="/questions/{{$q->id}}/vote" id="up-vote-question-{{$q->id}}" method="post" style="display:none">
-                                @csrf     
+                                @csrf
                                 <input type="hidden" name="vote" value="1">
                             </form>
 
                             <span class="votes-count">{{ $q->votes_count }}</span>
 
-                            <a 
-                                title="This question is not useful" 
+                            <a
+                                title="This question is not useful"
                                 class="vote-down {{ Auth::guest() ? 'off' : '' }}"
                                 onclick="event.preventDefault();document.getElementById('down-vote-question-{{$q->id}}').submit()"
                             >
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
                             <form action="/questions/{{$q->id}}/vote" id="down-vote-question-{{$q->id}}" method="post" style="display:none">
-                                @csrf     
+                                @csrf
                                 <input type="hidden" name="vote" value="-1">
                             </form>
 
-                            <a 
-                                title="Click to mark as favorite question (click again to undo)" 
+                            <a
+                                title="Click to mark as favorite question (click again to undo)"
                                 class="mt-2 {{ Auth::guest() ? 'off': ($q->is_favorited ? 'favorite' : '') }}"
                                 onclick="event.preventDefault();document.getElementById('favorite-question-{{$q->id}}').submit()"
                             >
                                 <i class="fas fa-star fa-2x"></i>
                                 <span class="favorite-count">{{$q->favorites_count}}</span>
                             </a>
-                            @if($q->is_favorited)   
+                            @if($q->is_favorited)
                                 <form action="/questions/{{$q->id}}/unfavorite" id="favorite-question-{{$q->id}}" method="post" style="display:none">
-                                    @csrf     
+                                    @csrf
                                 </form>
                             @else
                                 <form action="/questions/{{$q->id}}/favorite" id="favorite-question-{{$q->id}}" method="post" style="display:none">
-                                    @csrf     
+                                    @csrf
                                 </form>
                             @endif
-                            
+
                         </div>
 
                         <div class="media-body">

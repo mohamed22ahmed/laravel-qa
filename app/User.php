@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $appends=['url','avatar'];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -41,12 +42,12 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
-    
+
     public function answers(){
         return $this->hasMany(Answer::class);
     }
 
-    
+
     public function favorites(){
         // we specify the favorites table because the default name is question_user
         return $this->belongsToMany(Question::class, 'favorites')->withTimeStamps();
@@ -58,7 +59,7 @@ class User extends Authenticatable
     public function voteAnswers(){
         return $this->morphedByMany(Answer::class, 'votable');
     }
-    
+
     public function rel(){
         return $this->morphedByMany(Answer::class, 'votable');
     }
